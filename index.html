@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My Home Website</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        // Load Reddit posts
+        $.getJSON('/api/reddit', function(data) {
+          $.each(data.posts, function(i, post) {
+            $('#reddit-posts').append('<li><a href="' + post.url + '">' + post.title + '</a></li>');
+          });
+        });
+
+        // Load Twitter tweets
+        $.getJSON('/api/twitter', function(data) {
+          $.each(data.tweets, function(i, tweet) {
+            $('#twitter-tweets').append('<li><a href="https://twitter.com/' + tweet.user.screen_name + '/status/' + tweet.id_str + '">' + tweet.text + '</a></li>');
+          });
+        });
+
+        // Load Instagram posts
+        $.getJSON('/api/instagram', function(data) {
+          $.each(data.posts, function(i, post) {
+            $('#instagram-posts').append('<li><img src="' + post.image_url + '" alt="' + post.caption + '"></li>');
+          });
+        });
+
+        // Load TikTok videos
+        $.getJSON('/api/tiktok', function(data) {
+          $.each(data.videos, function(i, video) {
+            $('#tiktok-videos').append('<li><video src="' + video.video_url + '" controls></video><p>' + video.caption + '</p></li>');
+          });
+        });
+
+        // Load Home Assistant entities
+        $.getJSON('/api/homeassistant', function(data) {
+          $.each(data.entities, function(i, entity) {
+            $('#homeassistant-entities').append('<li>' + entity.entity_id + ': ' + entity.state + '</li>');
+          });
+        });
+
+        // Load OneNote pages
+        $.getJSON('/api/onenote', function(data) {
+          $.each(data.pages, function(i, page) {
+            $('#onenote-pages').append('<li><a href="' + page.link + '">' + page.title + '</a></li>');
+          });
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <h1>Welcome to my home website!</h1>
+    <h2>Reddit posts</h2>
+    <ul id="reddit-posts"></ul>
+    <h2>Twitter tweets</h2>
+    <ul id="twitter-tweets"></ul>
+    <h2>Instagram posts</h2>
+    <ul id="instagram-posts"></ul>
+    <h2>TikTok videos</h2>
+    <ul id="tiktok-videos"></ul>
+    <h2>Home Assistant entities</h2>
+    <ul id="homeassistant-entities"></ul>
+    <h2>OneNote pages</h2>
+    <ul id="onenote-pages"></ul>
+  </body>
+</html>
